@@ -1,0 +1,24 @@
+extends ../layouts/default
+
+block head
+    link(href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet")
+    
+block content
+    .page-header
+        h1=behavior.title
+    .previewer
+        canvas(id='button-canvas')
+        ul(id='anypixel-ui')
+            li: a(href='#' id='cursor-pointer' title='Cursor: single point').button 
+                i(class="material-icons") touch_app
+            li: a(href='#' id='cursor-hand' title='Cursor: hand').button 
+                i(class="material-icons") pan_tools
+            li: a(href='#' id='vis-toggle' title='Toggle displaying of events').button 
+                i(class="material-icons") visibility
+            li: a(href='#' id='color-toggle' title='Toggle color correction').button 
+                i(class="material-icons") wb_incandescent
+        canvas(id='display-canvas')
+                
+block js
+    script(id="preview-script" data-spacing="14" data-radius="4.4" data-x="418" data-y="470" src="/js/anypixel/preview.js")
+    script(src='/behavior/#{behavior.key}/pixel.js')

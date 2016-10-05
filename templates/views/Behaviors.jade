@@ -1,0 +1,38 @@
+extends ../layouts/default
+
+include ../mixins/behavior
+block content
+    .page-header
+        a(href='#').btn.btn-default.pull-right= user ? 'New Behavior' : 'Sign in to Create a Behavior'
+        h1='Behaviors'
+    .row
+        if behaviors.results.length
+            if behaviors.totalPages > 1
+                .lead.text-muted Showing
+                    strong #{behaviors.first}
+                    |   to
+                    strong #{behaviors.last}
+                    |   of
+                    strong #{behaviors.total}
+                    |   behaviors
+            else
+                .lead.text-muted Showing #{utils.plural(behaviors.results.length, '* behavior')}
+            .behavior
+                each behavior in behaviors.results
+                    +behavior(behavior)
+            if behaviors.totalPages > 1
+                ul.pagination
+                    if behaviors.previous
+                        li: a(href='?page=' + behaviors.previous): span.glyphicon.glyphicon-chevron-left
+                    else
+                        li.disabled: a(href='?page=' + 1): span.glyphicon.glyphicon-chevron-left
+                    each p, i in behaviors.pages
+                        li(class=behaviors.currentPage === p ? 'active' : null)
+                        a(href='?page=' + (p === '...' ? (i ? behaviors.totalPages : 1) : p ))= p
+                    if behaviors.next
+                        li: a(href='?page=' + behaviors.next): span.glyphicon.glyphicon-chevron-right
+                    else
+                        li.disabled: a(href='?page=' + behaviors.totalPages): span.glyphicon.glyphicon-chevron-right
+        else
+            .jumbotron.text-center
+                h3(style="margin-bottom:0;margin-top:0;") There are no behaviors yet.

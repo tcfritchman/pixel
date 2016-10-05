@@ -1,0 +1,15 @@
+mixin behavior(behavior)
+    article(data-ks-editable=editable(user, { list: 'Behavior', id: behavior.id })).media
+        .media-left
+            a(href='/behavior/' + behavior.key)
+                img(src="http://placehold.it/80x80").media-object
+        .media-body
+            h3.media-heading
+                a(href='/behavior/' + behavior.key)= behavior.title
+            p.text-muted.text-small
+                if behavior.createdAt
+                    time= behavior._.createdAt.format('MMMM Do, YYYY')
+                    |  
+                if behavior.author
+                    span by #{behavior.author.name.full}
+            != behavior.description.brief

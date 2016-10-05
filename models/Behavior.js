@@ -4,7 +4,7 @@ var Types = keystone.Field.Types;
 /* Behavior Model */
 
 var Behavior = new keystone.List('Behavior', {
-  autokey: { path: 'slug', from: 'title', unique: true },
+  autokey: { path: 'key', from: 'title', unique: true },
   map: { name: 'title' },
   defaultSort: '-createdAt'
 });
@@ -16,7 +16,10 @@ Behavior.add({
   isFeatured: { type: Types.Boolean, label: 'Featured?' },
   dependencies: { type: Types.Text, required: false },
   code: { type: Types.Code, height: 180, language: 'js' },
-  description: { type: Types.Markdown, height: 90 },
+  description: {
+    brief: { type: Types.Text, required: true, initial: true },
+    full: { type: Types.Markdown, height: 90 }
+  },
   tags: { type: Types.Relationship, ref: 'Tag', many: true }
 });
 
